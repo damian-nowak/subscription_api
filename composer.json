@@ -15,6 +15,7 @@
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
+        "laravel/telescope": "^2.0",
         "bmitch/churn-php": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
@@ -36,7 +37,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Domain\\": "domain/"
         },
         "classmap": [
             "database/seeds",
