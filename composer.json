@@ -65,6 +65,7 @@
         ],
         "stan": "@php artisan code:analyse",
         "phpcs": "vendor/bin/phpcs --report=summary",
-        "churn": "vendor/bin/churn run src tests"
+        "churn": "vendor/bin/churn run src tests",
+        "test": "vendor/bin/phpunit"
     }
 }
