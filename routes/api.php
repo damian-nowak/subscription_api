@@ -1,6 +1,7 @@
 <?php
 
 use Domain\Clients\Http\Controllers\ClientController;
+use Domain\Videos\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 
 /*
@@ -24,4 +25,10 @@ Route::prefix('v1')->group(function () {
     Route::post('clients', [ClientController::class, 'store']);
     Route::put('clients/{client}', [ClientController::class, 'update']);
     Route::delete('clients/{client}', [ClientController::class, 'destroy']);
+
+    Route::get('videos', [VideoController::class, 'index']);
+    Route::get('videos/{video}', [VideoController::class, 'show']);
+    Route::post('videos', [VideoController::class, 'store']);
+    Route::put('videos/{video}', [VideoController::class, 'update']);
+    Route::delete('videos/{video}', [VideoController::class, 'destroy']);
 });
