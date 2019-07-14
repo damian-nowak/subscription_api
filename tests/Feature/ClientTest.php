@@ -7,7 +7,6 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory;
 
-
 /**
  * @group latest
  */

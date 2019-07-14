@@ -2,6 +2,7 @@
 
 use Domain\Clients\Http\Controllers\ClientController;
 use Domain\Videos\Http\Controllers\VideoController;
+use Domain\Subscriptions\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
 
 /*
@@ -31,4 +32,10 @@ Route::prefix('v1')->group(function () {
     Route::post('videos', [VideoController::class, 'store']);
     Route::put('videos/{video}', [VideoController::class, 'update']);
     Route::delete('videos/{video}', [VideoController::class, 'destroy']);
+
+    Route::get('subs', [SubscriptionController::class, 'index']);
+    Route::get('subs/{subs}', [SubscriptionController::class, 'show']);
+    Route::post('subs', [SubscriptionController::class, 'store']);
+    Route::put('subs/{subs}', [SubscriptionController::class, 'update']);
+    Route::delete('subs/{subs}', [SubscriptionController::class, 'destroy']);
 });
