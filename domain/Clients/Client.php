@@ -3,6 +3,8 @@
 namespace Domain\Clients;
 
 use Domain\Subscriptions\Subscription;
+use Domain\Videos\Video;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -21,7 +23,7 @@ class Client extends Model
      *
      * @var array
      */
-    protected $with = ['subscriptions'];
+    protected $with = ['subscriptions', 'videos'];
 
     /**
      * The videos that belong to the subscription.
@@ -29,5 +31,33 @@ class Client extends Model
     public function subscriptions()
     {
         return $this->belongsToMany(Subscription::class);
+    }
+
+    /**
+     * The videos that belong to the subscription.
+     */
+    public function videos()
+    {
+        return $this->belongsToMany(Video::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return Collection
+     */
+    public function allVideos()
+    {
+        $subbedVids = collect([]);
+        $this->subscriptions->each(function($sub) use (&$subbedVids){
+            $tt = $sub->videos;
+            return $subbedVids->push($tt);
+        });
+
+        $flat = $subbedVids->flatten();
+        $vids = $this->videos;
+        $unique = $vids->concat($flat)->unique('id');
+
+        return $vids->concat($flat)->unique('id');
     }
 }
