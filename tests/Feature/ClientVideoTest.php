@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use Domain\Clients\Client;
+use Domain\Subscriptions\Subscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Domain\Subscriptions\Subscription;
 
 /**
  * @group latest
