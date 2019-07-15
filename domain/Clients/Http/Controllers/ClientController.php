@@ -15,7 +15,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listClients()
     {
         return Client::all();
     }
@@ -26,7 +26,7 @@ class ClientController extends Controller
      * @param  ClientCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientCreateRequest $request)
+    public function newClient(ClientCreateRequest $request)
     {
         return Client::create($request->all());
     }
@@ -37,7 +37,7 @@ class ClientController extends Controller
      * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function showClientData(Client $client)
     {
         return $client;
     }
@@ -49,7 +49,7 @@ class ClientController extends Controller
      * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function update(ClientUpdateRequest $request, Client $client)
+    public function updateClientData(ClientUpdateRequest $request, Client $client)
     {
         $client->update($request->all());
         return $client;
@@ -59,9 +59,9 @@ class ClientController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Client $client
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Client $client)
+    public function removeClient(Client $client)
     {
         $client->delete();
         return new JsonResponse('', 204);

@@ -3,6 +3,7 @@
 use Domain\Clients\Http\Controllers\ClientController;
 use Domain\Videos\Http\Controllers\VideoController;
 use Domain\Subscriptions\Http\Controllers\SubscriptionController;
+use Domain\Subscriptions\Http\Controllers\SubscriptionVideoController;
 use Illuminate\Http\Request;
 
 /*
@@ -21,21 +22,25 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::get('clients', [ClientController::class, 'index']);
-    Route::get('clients/{client}', [ClientController::class, 'show']);
-    Route::post('clients', [ClientController::class, 'store']);
-    Route::put('clients/{client}', [ClientController::class, 'update']);
-    Route::delete('clients/{client}', [ClientController::class, 'destroy']);
+    Route::get('clients', [ClientController::class, 'listClients']);
+    Route::get('clients/{client}', [ClientController::class, 'showClientData']);
+    Route::post('clients', [ClientController::class, 'newClient']);
+    Route::put('clients/{client}', [ClientController::class, 'updateClientData']);
+    Route::delete('clients/{client}', [ClientController::class, 'removeClient']);
 
-    Route::get('videos', [VideoController::class, 'index']);
-    Route::get('videos/{video}', [VideoController::class, 'show']);
-    Route::post('videos', [VideoController::class, 'store']);
-    Route::put('videos/{video}', [VideoController::class, 'update']);
-    Route::delete('videos/{video}', [VideoController::class, 'destroy']);
+    Route::get('videos', [VideoController::class, 'listVideos']);
+    Route::get('videos/{video}', [VideoController::class, 'showVideoData']);
+    Route::post('videos', [VideoController::class, 'newVideo']);
+    Route::put('videos/{video}', [VideoController::class, 'updateVideoData']);
+    Route::delete('videos/{video}', [VideoController::class, 'removeVideo']);
 
-    Route::get('subs', [SubscriptionController::class, 'index']);
-    Route::get('subs/{subs}', [SubscriptionController::class, 'show']);
-    Route::post('subs', [SubscriptionController::class, 'store']);
-    Route::put('subs/{subs}', [SubscriptionController::class, 'update']);
-    Route::delete('subs/{subs}', [SubscriptionController::class, 'destroy']);
+    Route::get('subs', [SubscriptionController::class, 'listSubscriptions']);
+    Route::get('subs/{sub}', [SubscriptionController::class, 'showSubscriptionData']);
+    Route::post('subs', [SubscriptionController::class, 'newSubscription']);
+    Route::put('subs/{sub}', [SubscriptionController::class, 'updateSubscriptionData']);
+    Route::delete('subs/{sub}', [SubscriptionController::class, 'removeSubscription']);
+
+    Route::get('subs/{sub}/videos', [SubscriptionVideoController::class, 'listSubscriptionVideos']);
+    Route::post('subs/{sub}/videos/{video}', [SubscriptionVideoController::class, 'addVideoToSubscription']);
+    Route::delete('subs/{sub}/videos/{video}', [SubscriptionVideoController::class, 'removeVideoFromSubscription']);
 });

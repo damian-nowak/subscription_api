@@ -15,7 +15,7 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listVideos()
     {
         return Video::all();
     }
@@ -26,7 +26,7 @@ class VideoController extends Controller
      * @param  VideoCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VideoCreateRequest $request)
+    public function newVideo(VideoCreateRequest $request)
     {
         return Video::create($request->all());
     }
@@ -37,7 +37,7 @@ class VideoController extends Controller
      * @param  Video $video
      * @return \Illuminate\Http\Response
      */
-    public function show(Video $video)
+    public function showVideoData(Video $video)
     {
         return $video;
     }
@@ -49,7 +49,7 @@ class VideoController extends Controller
      * @param  Video $video
      * @return \Illuminate\Http\Response
      */
-    public function update(VideoUpdateRequest $request, Video $video)
+    public function updateVideoData(VideoUpdateRequest $request, Video $video)
     {
         $video->update($request->all());
         return $video;
@@ -59,9 +59,9 @@ class VideoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Video $video
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Video $video)
+    public function removeVideo(Video $video)
     {
         $video->delete();
         return new JsonResponse('', 204);

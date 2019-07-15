@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listSubscriptions()
     {
         return Subscription::all();
     }
@@ -26,7 +26,7 @@ class SubscriptionController extends Controller
      * @param  SubscriptionCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubscriptionCreateRequest $request)
+    public function newSubscription(SubscriptionCreateRequest $request)
     {
         return Subscription::create($request->all());
     }
@@ -34,36 +34,36 @@ class SubscriptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Subscription $subs
+     * @param  Subscription $sub
      * @return \Illuminate\Http\Response
      */
-    public function show(Subscription $subs)
+    public function showSubscriptionData(Subscription $sub)
     {
-        return $subs;
+        return $sub;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  SubscriptionUpdateRequest  $request
-     * @param  Subscription $subs
+     * @param  Subscription $sub
      * @return \Illuminate\Http\Response
      */
-    public function update(SubscriptionUpdateRequest $request, Subscription $subs)
+    public function updateSubscriptionData(SubscriptionUpdateRequest $request, Subscription $sub)
     {
-        $subs->update($request->all());
-        return $subs;
+        $sub->update($request->all());
+        return $sub;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Subscription $subs
-     * @return \Illuminate\Http\Response
+     * @param  Subscription $sub
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Subscription $subs)
+    public function removeSubscription(Subscription $sub)
     {
-        $subs->delete();
+        $sub->delete();
         return new JsonResponse('', 204);
     }
 }

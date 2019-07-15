@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory;
 
 /**
- * @group latest
+ * @group video
  */
 class VideoTest extends TestCase
 {

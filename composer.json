@@ -64,7 +64,7 @@
             "@php artisan key:generate --ansi"
         ],
         "stan": "@php artisan code:analyse",
-        "phpcs": "vendor/bin/phpcs",
+        "phpcs": "vendor/bin/phpcs --ignore=*/tests/*",
         "phpcbf": "vendor/bin/phpcbf",
         "churn": "vendor/bin/churn run app domain tests",
         "test": "vendor/bin/phpunit"
