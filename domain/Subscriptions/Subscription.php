@@ -2,6 +2,7 @@
 
 namespace Domain\Subscriptions;
 
+use Domain\Clients\Client;
 use Domain\Videos\Video;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,13 @@ class Subscription extends Model
     public function videos()
     {
         return $this->belongsToMany(Video::class);
+    }
+
+    /**
+     * The videos that belong to the subscription.
+     */
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
     }
 }

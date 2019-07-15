@@ -1,6 +1,7 @@
 <?php
 
 use Domain\Clients\Http\Controllers\ClientController;
+use Domain\Clients\Http\Controllers\ClientSubscriptionController;
 use Domain\Videos\Http\Controllers\VideoController;
 use Domain\Subscriptions\Http\Controllers\SubscriptionController;
 use Domain\Subscriptions\Http\Controllers\SubscriptionVideoController;
@@ -27,6 +28,10 @@ Route::prefix('v1')->group(function () {
     Route::post('clients', [ClientController::class, 'newClient']);
     Route::put('clients/{client}', [ClientController::class, 'updateClientData']);
     Route::delete('clients/{client}', [ClientController::class, 'removeClient']);
+
+    Route::get('clients/{client}/subs', [ClientSubscriptionController::class, 'listClientSubscriptions']);
+    Route::post('clients/{client}/subs/{sub}', [ClientSubscriptionController::class, 'clientSubscribes']);
+    Route::delete('clients/{client}/subs/{sub}', [ClientSubscriptionController::class, 'clientUnsubscribes']);
 
     Route::get('videos', [VideoController::class, 'listVideos']);
     Route::get('videos/{video}', [VideoController::class, 'showVideoData']);
