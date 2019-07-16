@@ -8,10 +8,24 @@ use Domain\Videos\Video;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @apiDefine ResourceNotFoundError
+ *
+ * @apiError 404 ResourceNotFound The requested resource was not found.
+ */
 class ClientVideoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @api {get} /clients/:id/videos Display client's videos.
+     * @apiParam {Number} id Client unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName GetClientVids
+     * @apiGroup Clients_Videos
+     *
+     * @apiSuccess (200) {Object[]} video Client videos data.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Client $client
      * @return \Illuminate\Http\JsonResponse
@@ -22,7 +36,17 @@ class ClientVideoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @api {get} /clients/:id/videos/:id Verify client's video entitlement.
+     * @apiParam {Number} id Client unique ID
+     * @apiParam {Number} id Video unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName GetClientVideo
+     * @apiGroup Clients_Videos
+     *
+     * @apiSuccess (200) {Object} video If client owns video - returns video data.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Client $client
      * @param  Video $video
@@ -41,7 +65,17 @@ class ClientVideoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @api {post} /clients/:id/videos/:id Client's new video.
+     * @apiParam {Number} id Client unique ID
+     * @apiParam {Number} id Video unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName PostClientVideo
+     * @apiGroup Clients_Videos
+     *
+     * @apiSuccess 204 Video added.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Client $client
      * @param  Video $video
@@ -54,7 +88,17 @@ class ClientVideoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @api {delete} /clients/:id/videos/:id Client's video removed.
+     * @apiParam {Number} id Client unique ID
+     * @apiParam {Number} id Video unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName DeleteClientVideo
+     * @apiGroup Clients_Videos
+     *
+     * @apiSuccess 204 Video added.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Client $client
      * @param  Video $video

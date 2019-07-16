@@ -1,0 +1,10 @@
+{
+    "name": "Subscription API",
+    "version": "0.1.0",
+    "description": "Documentation for Subscription API",
+    "title": "API documentation",
+    "url" : "https://localhost:82/api/v1",
+    "template": {
+      "forceLanguage": "en"
+    }
+  }

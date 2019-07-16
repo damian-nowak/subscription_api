@@ -8,10 +8,26 @@ use Domain\Subscriptions\Http\Requests\SubscriptionUpdateRequest;
 use Domain\Subscriptions\Http\Requests\SubscriptionCreateRequest;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * @apiDefine ResourceNotFoundError
+ *
+ * @apiError 404 ResourceNotFound The requested resource was not found.
+ */
+
+/**
+ * @apiDefine InvalidDataError
+ *
+ * @apiError 422 InvalidDataError The payload sent with request has invalid / is missing needed data.
+ */
 class SubscriptionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @api {get} /subs Request all subscriptions
+     * @apiVersion 0.1.0
+     * @apiName GetSubscriptions
+     * @apiGroup Subscriptions
+     *
+     * @apiSuccess {Object[]} subscription List of all subscriptions.
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,7 +37,16 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @api {post} /subs Store a newly created subscription.
+     * @apiVersion 0.1.0
+     * @apiName PostSubscription
+     * @apiGroup Subscriptions
+     *
+     * @apiParam {String} name  required subscription name
+     *
+     * @apiSuccess (201) {Object} subscription New subscription data.
+     *
+     * @apiUse InvalidDataError
      *
      * @param  SubscriptionCreateRequest  $request
      * @return \Illuminate\Http\Response
@@ -32,7 +57,16 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @api {get} /subs/:id Display the specified subscription.
+     * @apiParam {Number} id Subscription's unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName GetSubscription
+     * @apiGroup Subscriptions
+     *
+     * @apiSuccess (200) {Object} subscription Subscription's data.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Subscription $sub
      * @return \Illuminate\Http\Response
@@ -43,7 +77,19 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @api {put} /subs/:id Update subscription data.
+     * @apiParam {Number} id Subscription's unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName PutSubscription
+     * @apiGroup Subscriptions
+     *
+     * @apiParam {String} name  new subscription name
+     *
+     * @apiSuccess (200) {Object} subscription Updated subscription's data.
+     *
+     * @apiUse ResourceNotFoundError
+     * @apiUse InvalidDataError
      *
      * @param  SubscriptionUpdateRequest  $request
      * @param  Subscription $sub
@@ -56,7 +102,16 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @api {delete} /subs/:id Remove subscription.
+     * @apiParam {Number} id Subscription's unique ID
+     *
+     * @apiVersion 0.1.0
+     * @apiName DeleteSubscription
+     * @apiGroup Subscriptions
+     *
+     * @apiSuccess 204 Subscription removed.
+     *
+     * @apiUse ResourceNotFoundError
      *
      * @param  Subscription $sub
      * @return \Illuminate\Http\JsonResponse

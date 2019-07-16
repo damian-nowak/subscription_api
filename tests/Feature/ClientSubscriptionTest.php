@@ -85,4 +85,22 @@ class ClientSubscriptionTest extends TestCase
         $this->deleteJson('/api/v1/clients/6/subs/1')->assertStatus(404);
         $this->deleteJson('/api/v1/clients/1/subs/10')->assertStatus(404);
     }
+
+    /**
+     * @test
+     */
+    public function should_return_client_subscription_data_when_owned_or_404()
+    {
+        // client with subscription
+        $client = Client::find(1);
+        $client->subscriptions()->attach(1);
+
+        $this->getJson('/api/v1/clients/1/subs/1')
+            ->assertStatus(200)
+            ->assertJsonFragment(["id" => 1])
+            ;
+
+        $this->getJson('/api/v1/clients/1/subs/4')
+            ->assertStatus(404);
+    }
 }

@@ -19,9 +19,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::prefix('v1')->group(function () {
     Route::get('clients', [ClientController::class, 'listClients']);
@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function () {
     Route::delete('clients/{client}', [ClientController::class, 'removeClient']);
 
     Route::get('clients/{client}/subs', [ClientSubscriptionController::class, 'listClientSubscriptions']);
+    Route::get('clients/{client}/subs/{sub}', [ClientSubscriptionController::class, 'clientSubscriptionData']);
     Route::post('clients/{client}/subs/{sub}', [ClientSubscriptionController::class, 'clientSubscribes']);
     Route::delete('clients/{client}/subs/{sub}', [ClientSubscriptionController::class, 'clientUnsubscribes']);
 

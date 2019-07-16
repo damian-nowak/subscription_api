@@ -6,10 +6,15 @@ In this project I am showcasing a simple subscription api, allowing to perform t
 ## Project information
 
 I decided to use Laravel as the basis for the API, as it is the framework I am most familiar with at the moment and
-I did not want to be too time constrained due to too many new things. Modifying it to be more DDD like was probably
-the greatest challenge in this task - due to little practical knowledge of it. As I have found, there is no perfect
-way of combining Laravel with DDD, albeit even taking it into consideration, allows to make more conscious choices
-while constructing your application - and that is for me the immediate benefit of this task.
+I did not want to be too time constrained due to too many new things - so far I have only read few articles about DDD.
+Modifying it to be more DDD like was probably the greatest challenge in this task - due to little practical knowledge of it.
+As I have found, there is no perfect way of combining Laravel with DDD, albeit even taking it into consideration,
+allows to make more conscious choices while constructing your application - and that is for me the immediate benefit of this task.
+
+While working on the API I tried to use "KISS" and "YAGNI" as much as possible - as a result my controllers are not very
+SOLID ;) - I decided that with such a simple (from a business point of view) tasks using services or repositories would be
+an overkill. On the other hand if I were to continue working on this application - I would definitely move responsibilites
+connected with business logic to separate class.
 
 ## Docker installation
 
@@ -63,4 +68,4 @@ Running application in docker environment requires docker and docker-compose ins
     docker-compose exec app php artisan migrate --seed
     ```
 
-9. application is now ready at "localhost:82/api/v1
+9. application is now ready at "localhost:82"

@@ -24,8 +24,8 @@ class ClientCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string',
-            'email' => 'unique:clients|email'
+            'name' => 'required|string',
+            'email' => 'required|unique:clients|email'
         ];
     }
 }

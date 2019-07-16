@@ -153,7 +153,7 @@ class ClientVideoTest extends TestCase
             ->assertJsonFragment(["id" => 3])
             ;
 
-        $response = $this->getJson('/api/v1/clients/1/videos/4')
+        $this->getJson('/api/v1/clients/1/videos/4')
             ->assertStatus(404);
     }
 }
