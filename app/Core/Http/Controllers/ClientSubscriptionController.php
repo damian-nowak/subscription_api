@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Clients\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Clients\Client;
@@ -27,11 +27,12 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
+     * @param  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listClientSubscriptions(Client $client)
+    public function listClientSubscriptions($id)
     {
+        $client = Client::findOrFail($id);
         return new JsonResponse($client->subscriptions()->get(), 200);
     }
 
@@ -48,19 +49,20 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Subscription $subscription
+     * @param  $id
+     * @param  $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientSubscriptionData(Client $client, Subscription $sub)
+    public function clientSubscriptionData($id, $sub_id)
     {
-        $checkOwnership = $client->subscriptions()->where('subscriptions.id', $sub->id)->count();
+        $client = Client::findOrFail($id);
+        $checkOwnership = $client->subscriptions()->where('subscriptions.id', $sub_id)->count();
 
         if($checkOwnership === 0){
             throw new NotFoundHttpException('Resource not found', null, 404);
         }
 
-        return $sub;
+        return Subscription::find($sub_id);
     }
 
     /**
@@ -76,13 +78,15 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Subscription $sub
+     * @param  $id
+     * @param  $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientSubscribes(Client $client, Subscription $sub)
+    public function clientSubscribes($id, $sub_id)
     {
-        $client->subscriptions()->attach($sub);
+        $client = Client::findOrFail($id);
+        $sub = Subscription::findOrFail($sub_id);
+        $client->subscriptions()->attach($sub->id);
         return new JsonResponse('', 204);
     }
 
@@ -99,13 +103,15 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Subscription $sub
+     * @param  $id
+     * @param  $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientUnsubscribes(Client $client, Subscription $sub)
+    public function clientUnsubscribes($id, $sub_id)
     {
-        $client->subscriptions()->detach($sub);
+        $client = Client::findOrFail($id);
+        $sub = Subscription::findOrFail($sub_id);
+        $client->subscriptions()->detach($sub->id);
         return new JsonResponse('', 204);
     }
 }

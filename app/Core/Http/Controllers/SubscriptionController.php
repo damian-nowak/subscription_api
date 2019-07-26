@@ -1,11 +1,11 @@
 <?php
 
-namespace Domain\Subscriptions\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Subscriptions\Subscription;
-use Domain\Subscriptions\Http\Requests\SubscriptionUpdateRequest;
-use Domain\Subscriptions\Http\Requests\SubscriptionCreateRequest;
+use App\Core\Http\Requests\SubscriptionUpdateRequest;
+use App\Core\Http\Requests\SubscriptionCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -68,12 +68,12 @@ class SubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Subscription $sub
+     * @param  $sub_id
      * @return \Illuminate\Http\Response
      */
-    public function showSubscriptionData(Subscription $sub)
+    public function showSubscriptionData($sub_id)
     {
-        return $sub;
+        return Subscription::findOrFail($sub_id);
     }
 
     /**
@@ -92,11 +92,12 @@ class SubscriptionController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  SubscriptionUpdateRequest  $request
-     * @param  Subscription $sub
+     * @param  $sub_id
      * @return \Illuminate\Http\Response
      */
-    public function updateSubscriptionData(SubscriptionUpdateRequest $request, Subscription $sub)
+    public function updateSubscriptionData(SubscriptionUpdateRequest $request, $sub_id)
     {
+        $sub = Subscription::findOrFail($sub_id);
         $sub->update($request->all());
         return $sub;
     }
@@ -113,11 +114,12 @@ class SubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Subscription $sub
+     * @param  $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeSubscription(Subscription $sub)
+    public function removeSubscription($sub_id)
     {
+        $sub = Subscription::findOrFail($sub_id);
         $sub->delete();
         return new JsonResponse('', 204);
     }

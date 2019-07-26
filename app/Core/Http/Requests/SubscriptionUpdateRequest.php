@@ -1,10 +1,10 @@
 <?php
 
-namespace Domain\Subscriptions\Http\Requests;
+namespace App\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubscriptionCreateRequest extends FormRequest
+class SubscriptionUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class SubscriptionCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string'
+            'name' => 'string'
         ];
     }
 }

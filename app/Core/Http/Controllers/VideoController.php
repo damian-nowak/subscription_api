@@ -1,11 +1,11 @@
 <?php
 
-namespace Domain\Videos\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Videos\Video;
-use Domain\Videos\Http\Requests\VideoUpdateRequest;
-use Domain\Videos\Http\Requests\VideoCreateRequest;
+use App\Core\Http\Requests\VideoUpdateRequest;
+use App\Core\Http\Requests\VideoCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -68,12 +68,12 @@ class VideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Video $video
+     * @param  $vid_id
      * @return \Illuminate\Http\Response
      */
-    public function showVideoData(Video $video)
+    public function showVideoData($vid_id)
     {
-        return $video;
+        return Video::findOrFail($vid_id);
     }
 
     /**
@@ -92,11 +92,12 @@ class VideoController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  VideoUpdateRequest  $request
-     * @param  Video $video
+     * @param  $vid_id
      * @return \Illuminate\Http\Response
      */
-    public function updateVideoData(VideoUpdateRequest $request, Video $video)
+    public function updateVideoData(VideoUpdateRequest $request, $vid_id)
     {
+        $video = Video::findOrFail($vid_id);
         $video->update($request->all());
         return $video;
     }
@@ -113,11 +114,12 @@ class VideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Video $video
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeVideo(Video $video)
+    public function removeVideo($vid_id)
     {
+        $video = Video::findOrFail($vid_id);
         $video->delete();
         return new JsonResponse('', 204);
     }

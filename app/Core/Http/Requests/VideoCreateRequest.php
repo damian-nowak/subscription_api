@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Videos\Http\Requests;
+namespace App\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

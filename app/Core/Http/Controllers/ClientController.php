@@ -1,11 +1,11 @@
 <?php
 
-namespace Domain\Clients\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Clients\Client;
-use Domain\Clients\Http\Requests\ClientUpdateRequest;
-use Domain\Clients\Http\Requests\ClientCreateRequest;
+use App\Core\Http\Requests\ClientUpdateRequest;
+use App\Core\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -68,12 +68,12 @@ class ClientController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function showClientData(Client $client)
+    public function showClientData($id)
     {
-        return $client;
+        return Client::findOrFail($id);
     }
 
     /**
@@ -93,11 +93,12 @@ class ClientController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  ClientUpdateRequest  $request
-     * @param  Client $client
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateClientData(ClientUpdateRequest $request, Client $client)
+    public function updateClientData(ClientUpdateRequest $request, $id)
     {
+        $client = Client::findOrFail($id);
         $client->update($request->all());
         return $client;
     }
@@ -114,11 +115,12 @@ class ClientController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
+     * @param  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeClient(Client $client)
+    public function removeClient($id)
     {
+        $client = Client::findOrFail($id);
         $client->delete();
         return new JsonResponse('', 204);
     }

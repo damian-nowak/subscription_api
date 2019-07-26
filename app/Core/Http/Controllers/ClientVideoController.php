@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Clients\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Clients\Client;
@@ -27,11 +27,12 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
+     * @param  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listClientVideos(Client $client)
+    public function listClientVideos($id)
     {
+        $client = Client::findOrFail($id);
         return new JsonResponse($client->allVideos(), 200);
     }
 
@@ -48,20 +49,21 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Video $video
+     * @param  $id
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientVideoData(Client $client, Video $video)
+    public function clientVideoData($id, $vid_id)
     {
+        $client = Client::findOrFail($id);
         $ownedVideos = $client->allVideos();
-        $checkOwnership = $ownedVideos->where('id', $video->id)->count();
+        $checkOwnership = $ownedVideos->where('id', $vid_id)->count();
 
         if($checkOwnership === 0){
             throw new NotFoundHttpException('Resource not found', null, 404);
         }
 
-        return $video;
+        return Video::find($vid_id);
     }
 
     /**
@@ -77,13 +79,15 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Video $video
+     * @param  $id
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientAddsVideo(Client $client, Video $video)
+    public function clientAddsVideo($id, $vid_id)
     {
-        $client->videos()->attach($video);
+        $client = Client::findOrFail($id);
+        $vid = Video::findOrFail($vid_id);
+        $client->videos()->attach($vid->id);
         return new JsonResponse('', 204);
     }
 
@@ -100,13 +104,15 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Client $client
-     * @param  Video $video
+     * @param  $id
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeClientVideo(Client $client, Video $video)
+    public function removeClientVideo($id, $vid_id)
     {
-        $client->videos()->detach($video);
+        $client = Client::findOrFail($id);
+        $vid = Video::findOrFail($vid_id);
+        $client->videos()->detach($vid->id);
         return new JsonResponse('', 204);
     }
 }

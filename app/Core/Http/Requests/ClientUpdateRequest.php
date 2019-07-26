@@ -1,10 +1,10 @@
 <?php
 
-namespace Domain\Videos\Http\Requests;
+namespace App\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VideoUpdateRequest extends FormRequest
+class ClientUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class VideoUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string'
+            'name' => 'string',
+            'email' => 'unique:clients|email'
         ];
     }
 }

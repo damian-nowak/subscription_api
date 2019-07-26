@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Subscriptions\Http\Controllers;
+namespace App\Core\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
 use Domain\Subscriptions\Subscription;
@@ -26,11 +26,12 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Subscription $sub
+     * @param  $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listSubscriptionVideos(Subscription $sub)
+    public function listSubscriptionVideos($sub_id)
     {
+        $sub = Subscription::findOrFail($sub_id);
         return new JsonResponse($sub->videos()->get(), 200);
     }
 
@@ -47,13 +48,15 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Subscription $sub
-     * @param  Video $video
+     * @param  $sub_id
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addVideoToSubscription(Subscription $sub, Video $video)
+    public function addVideoToSubscription($sub_id, $vid_id)
     {
-        $sub->videos()->attach($video);
+        $sub = Subscription::findOrFail($sub_id);
+        $vid = Video::findOrFail($vid_id);
+        $sub->videos()->attach($vid->id);
         return new JsonResponse('', 204);
     }
 
@@ -70,13 +73,15 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  Subscription $sub
-     * @param  Video $video
+     * @param  $sub_id
+     * @param  $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeVideoFromSubscription(Subscription $sub, Video $video)
+    public function removeVideoFromSubscription($sub_id, $vid_id)
     {
-        $sub->videos()->detach($video);
+        $sub = Subscription::findOrFail($sub_id);
+        $vid = Video::findOrFail($vid_id);
+        $sub->videos()->detach($vid->id);
         return new JsonResponse('', 204);
     }
 }

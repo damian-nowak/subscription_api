@@ -1,10 +1,10 @@
 <?php
 
-namespace Domain\Clients\Http\Requests;
+namespace App\Core\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientUpdateRequest extends FormRequest
+class ClientCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class ClientUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string',
-            'email' => 'unique:clients|email'
+            'name' => 'required|string',
+            'email' => 'required|unique:clients|email'
         ];
     }
 }
