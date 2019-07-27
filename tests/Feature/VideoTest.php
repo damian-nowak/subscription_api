@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Domain\Videos\Video;
-use Tests\TestCase;
+use Infrastructure\Videos\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory;
+use Tests\TestCase;
 
 /**
  * @group video

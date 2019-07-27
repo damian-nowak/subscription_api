@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Clients\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Domain\Clients\Client;
-use Domain\Videos\Video;
+use Infrastructure\Clients\Client;
+use Infrastructure\Videos\Video;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

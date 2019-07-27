@@ -1,11 +1,11 @@
 <?php
 
-use App\Core\Http\Controllers\ClientController;
-use App\Core\Http\Controllers\ClientSubscriptionController;
-use App\Core\Http\Controllers\ClientVideoController;
-use App\Core\Http\Controllers\VideoController;
-use App\Core\Http\Controllers\SubscriptionController;
-use App\Core\Http\Controllers\SubscriptionVideoController;
+use App\Clients\Http\Controllers\ClientController;
+use App\Clients\Http\Controllers\ClientSubscriptionController;
+use App\Clients\Http\Controllers\ClientVideoController;
+use App\Videos\Http\Controllers\VideoController;
+use App\Subscriptions\Http\Controllers\SubscriptionController;
+use App\Subscriptions\Http\Controllers\SubscriptionVideoController;
 
 /*
 |--------------------------------------------------------------------------

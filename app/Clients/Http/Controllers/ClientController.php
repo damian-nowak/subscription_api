@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Clients\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Domain\Clients\Client;
-use App\Core\Http\Requests\ClientUpdateRequest;
-use App\Core\Http\Requests\ClientCreateRequest;
+use Infrastructure\Clients\Client;
+use App\Clients\Http\Requests\ClientUpdateRequest;
+use App\Clients\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**

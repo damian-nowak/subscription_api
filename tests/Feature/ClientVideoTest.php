@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Domain\Clients\Client;
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Clients\Client;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

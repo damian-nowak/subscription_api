@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Subscriptions\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Http\JsonResponse;
-use Domain\Videos\Video;
+use Infrastructure\Videos\Video;
 
 /**
  * @apiDefine ResourceNotFoundError

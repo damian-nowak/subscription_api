@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

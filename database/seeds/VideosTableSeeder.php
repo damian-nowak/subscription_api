@@ -1,6 +1,6 @@
 <?php
 
-use Domain\Videos\Video;
+use Infrastructure\Videos\Video;
 use Illuminate\Database\Seeder;
 
 class VideosTableSeeder extends Seeder

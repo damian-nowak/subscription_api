@@ -1,6 +1,6 @@
 <?php
 
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Database\Seeder;
 
 class SubscriptionsTableSeeder extends Seeder

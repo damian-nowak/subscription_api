@@ -1,6 +1,6 @@
 <?php
 
-use Domain\Clients\Client;
+use Infrastructure\Clients\Client;
 use Illuminate\Database\Seeder;
 
 class ClientsTableSeeder extends Seeder

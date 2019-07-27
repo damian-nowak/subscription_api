@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Domain\Subscriptions\Subscription;
-use Tests\TestCase;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory;
+use Tests\TestCase;
 
 /**
  * @group subscription

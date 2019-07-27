@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Videos;
+namespace Infrastructure\Videos;
 
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model

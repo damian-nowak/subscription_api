@@ -1,7 +1,7 @@
 <?php
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
-use Domain\Subscriptions\Subscription;
+use Infrastructure\Subscriptions\Subscription;
 use Faker\Generator as Faker;
 
 $factory->define(Subscription::class, function (Faker $faker) {

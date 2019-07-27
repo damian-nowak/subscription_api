@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Subscriptions;
+namespace Infrastructure\Subscriptions;
 
-use Domain\Clients\Client;
-use Domain\Videos\Video;
+use Infrastructure\Clients\Client;
+use Infrastructure\Videos\Video;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model

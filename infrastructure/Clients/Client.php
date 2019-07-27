@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Clients;
+namespace Infrastructure\Clients;
 
-use Domain\Subscriptions\Subscription;
-use Domain\Videos\Video;
+use Infrastructure\Subscriptions\Subscription;
+use Infrastructure\Videos\Video;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 

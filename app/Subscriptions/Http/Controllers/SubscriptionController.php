@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Subscriptions\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Domain\Subscriptions\Subscription;
-use App\Core\Http\Requests\SubscriptionUpdateRequest;
-use App\Core\Http\Requests\SubscriptionCreateRequest;
+use Infrastructure\Subscriptions\Subscription;
+use App\Subscriptions\Http\Requests\SubscriptionUpdateRequest;
+use App\Subscriptions\Http\Requests\SubscriptionCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**

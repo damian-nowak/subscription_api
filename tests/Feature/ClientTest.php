@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Domain\Clients\Client;
-use Tests\TestCase;
+use Infrastructure\Clients\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory;
+use Tests\TestCase;
 
 /**
  * @group client

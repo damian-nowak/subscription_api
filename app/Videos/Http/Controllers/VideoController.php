@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Videos\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Domain\Videos\Video;
-use App\Core\Http\Requests\VideoUpdateRequest;
-use App\Core\Http\Requests\VideoCreateRequest;
+use Infrastructure\Videos\Video;
+use App\Videos\Http\Requests\VideoUpdateRequest;
+use App\Videos\Http\Requests\VideoCreateRequest;
 use Illuminate\Http\JsonResponse;
 
 /**
