@@ -3,10 +3,10 @@
 namespace App\Subscriptions\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Infrastructure\Subscriptions\Subscription;
 use App\Subscriptions\Http\Requests\SubscriptionUpdateRequest;
 use App\Subscriptions\Http\Requests\SubscriptionCreateRequest;
 use Illuminate\Http\JsonResponse;
+use App\Subscriptions\Services\SubscriptionApplicationService;
 
 /**
  * @apiDefine ResourceNotFoundError
@@ -21,6 +21,13 @@ use Illuminate\Http\JsonResponse;
  */
 class SubscriptionController extends Controller
 {
+    public $appService;
+
+    public function __construct(SubscriptionApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /subs Request all subscriptions
      * @apiVersion 0.1.0
@@ -33,7 +40,7 @@ class SubscriptionController extends Controller
      */
     public function listSubscriptions()
     {
-        return Subscription::all();
+        return $this->appService->findAll();
     }
 
     /**
@@ -53,7 +60,8 @@ class SubscriptionController extends Controller
      */
     public function newSubscription(SubscriptionCreateRequest $request)
     {
-        return Subscription::create($request->all());
+        $data = $request->only('name');
+        return $this->appService->create($data);
     }
 
     /**
@@ -73,7 +81,7 @@ class SubscriptionController extends Controller
      */
     public function showSubscriptionData($sub_id)
     {
-        return Subscription::findOrFail($sub_id);
+        return $this->appService->find($sub_id);
     }
 
     /**
@@ -97,9 +105,8 @@ class SubscriptionController extends Controller
      */
     public function updateSubscriptionData(SubscriptionUpdateRequest $request, $sub_id)
     {
-        $sub = Subscription::findOrFail($sub_id);
-        $sub->update($request->all());
-        return $sub;
+        $data = $request->only('name');
+        return $this->appService->update($sub_id, $data);
     }
 
     /**
@@ -119,8 +126,7 @@ class SubscriptionController extends Controller
      */
     public function removeSubscription($sub_id)
     {
-        $sub = Subscription::findOrFail($sub_id);
-        $sub->delete();
+        $this->appService->delete($sub_id);
         return new JsonResponse('', 204);
     }
 }

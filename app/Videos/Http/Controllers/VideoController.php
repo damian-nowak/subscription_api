@@ -3,10 +3,10 @@
 namespace App\Videos\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Infrastructure\Videos\Video;
 use App\Videos\Http\Requests\VideoUpdateRequest;
 use App\Videos\Http\Requests\VideoCreateRequest;
 use Illuminate\Http\JsonResponse;
+use App\Videos\Services\VideoApplicationService;
 
 /**
  * @apiDefine ResourceNotFoundError
@@ -21,6 +21,13 @@ use Illuminate\Http\JsonResponse;
  */
 class VideoController extends Controller
 {
+    public $appService;
+
+    public function __construct(VideoApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /videos Request all videos
      * @apiVersion 0.1.0
@@ -33,7 +40,7 @@ class VideoController extends Controller
      */
     public function listVideos()
     {
-        return Video::all();
+        return $this->appService->findAll();
     }
 
     /**
@@ -53,7 +60,8 @@ class VideoController extends Controller
      */
     public function newVideo(VideoCreateRequest $request)
     {
-        return Video::create($request->all());
+        $data = $request->only('title');
+        return $this->appService->create($data);
     }
 
     /**
@@ -73,7 +81,7 @@ class VideoController extends Controller
      */
     public function showVideoData($vid_id)
     {
-        return Video::findOrFail($vid_id);
+        return $this->appService->find($vid_id);
     }
 
     /**
@@ -97,9 +105,8 @@ class VideoController extends Controller
      */
     public function updateVideoData(VideoUpdateRequest $request, $vid_id)
     {
-        $video = Video::findOrFail($vid_id);
-        $video->update($request->all());
-        return $video;
+        $data = $request->only('title');
+        return $this->appService->update($vid_id, $data);
     }
 
     /**
@@ -119,8 +126,7 @@ class VideoController extends Controller
      */
     public function removeVideo($vid_id)
     {
-        $video = Video::findOrFail($vid_id);
-        $video->delete();
+        $this->appService->delete($vid_id);
         return new JsonResponse('', 204);
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Clients\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Infrastructure\Clients\Client;
 use App\Clients\Http\Requests\ClientUpdateRequest;
 use App\Clients\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\JsonResponse;
+use App\Clients\Services\ClientApplicationService;
 
 /**
  * @apiDefine ResourceNotFoundError
@@ -21,6 +21,14 @@ use Illuminate\Http\JsonResponse;
  */
 class ClientController extends Controller
 {
+
+    public $appService;
+
+    public function __construct(ClientApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /clients Request all clients
      * @apiVersion 0.1.0
@@ -32,7 +40,7 @@ class ClientController extends Controller
      */
     public function listClients()
     {
-        return Client::all();
+        return $this->appService->findAll();
     }
 
     /**
@@ -53,7 +61,8 @@ class ClientController extends Controller
      */
     public function newClient(ClientCreateRequest $request)
     {
-        return Client::create($request->all());
+        $data = $request->only(['email', 'name']);
+        return $this->appService->create($data);
     }
 
     /**
@@ -73,7 +82,7 @@ class ClientController extends Controller
      */
     public function showClientData($id)
     {
-        return Client::findOrFail($id);
+        return $this->appService->find($id);
     }
 
     /**
@@ -98,9 +107,8 @@ class ClientController extends Controller
      */
     public function updateClientData(ClientUpdateRequest $request, $id)
     {
-        $client = Client::findOrFail($id);
-        $client->update($request->all());
-        return $client;
+        $data = $request->only(['email', 'name']);
+        return $this->appService->update($id, $data);
     }
 
     /**
@@ -120,8 +128,7 @@ class ClientController extends Controller
      */
     public function removeClient($id)
     {
-        $client = Client::findOrFail($id);
-        $client->delete();
+        $this->appService->delete($id);
         return new JsonResponse('', 204);
     }
 }
