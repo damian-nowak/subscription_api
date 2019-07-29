@@ -6,11 +6,11 @@ interface ApplicationServiceInterface
 {
     public function findAll();
 
-    public function find($id);
+    public function find(int $id);
 
-    public function create($data);
+    public function create(array $data);
 
-    public function update($id, $data);
+    public function update(int $id, array $data);
 
-    public function delete($id);
+    public function delete(int $id);
 }

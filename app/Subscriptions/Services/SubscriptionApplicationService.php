@@ -11,4 +11,19 @@ class SubscriptionApplicationService extends AbstractApplicationService
     {
         parent::__construct($subscriptionDomainService);
     }
+
+    public function getSubscriptionVideos(int $sub_id)
+    {
+        return $this->domainService->getSubscriptionVideos($sub_id);
+    }
+
+    public function addVideoToSubscription(int $vid_id, int  $sub_id)
+    {
+        return $this->domainService->addVideoToSubscription($vid_id, $sub_id);
+    }
+
+    public function removeVideoFromSubscription(int $vid_id, int  $sub_id)
+    {
+        return $this->domainService->removeVideoFromSubscription($vid_id, $sub_id);
+    }
 }

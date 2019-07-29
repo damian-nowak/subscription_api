@@ -19,19 +19,19 @@ class SubscriptionRepository implements RepositoryInterface
         return $this->subscription::all();
     }
 
-    public function find($id)
+    public function find(int $id)
     {
         return $this->subscription::findOrFail($id);
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         return $this->subscription::create([
             'name' => $data['name']
         ]);
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         $subToUpdate = $this->subscription::findOrFail($id);
 
@@ -42,9 +42,20 @@ class SubscriptionRepository implements RepositoryInterface
         return $subToUpdate;
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
-        $clientToDelete = $this->subscription::findOrFail($id);
-        return $clientToDelete->delete();
+        $subToDelete = $this->subscription::findOrFail($id);
+        return $subToDelete->delete();
+    }
+
+    // Eager load database relationships
+    public function with(string $relations)
+    {
+        return $this->model->with($relations);
+    }
+
+    public function withVideos(int $sub_id)
+    {
+        return ($this->subscription::findOrFail($sub_id))->videos;
     }
 }

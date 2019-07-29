@@ -6,6 +6,7 @@ use App\Core\Http\Controllers\Controller;
 use Infrastructure\Clients\Client;
 use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Http\JsonResponse;
+use App\Clients\Services\ClientApplicationService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -15,6 +16,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ClientSubscriptionController extends Controller
 {
+    public $appService;
+
+    public function __construct(ClientApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /clients/:id/subs Display client's subscriptions.
      * @apiParam {Number} id Client unique ID
@@ -27,13 +35,13 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listClientSubscriptions($id)
+    public function listClientSubscriptions(int $id)
     {
-        $client = Client::findOrFail($id);
-        return new JsonResponse($client->subscriptions()->get(), 200);
+        $clientSubs = $this->appService->listClientSubscriptions($id);
+        return new JsonResponse($clientSubs, 200);
     }
 
     /**
@@ -49,20 +57,14 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $sub_id
+     * @param int $id
+     * @param int $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientSubscriptionData($id, $sub_id)
+    public function clientSubscriptionData(int $id, int $sub_id)
     {
-        $client = Client::findOrFail($id);
-        $checkOwnership = $client->subscriptions()->where('subscriptions.id', $sub_id)->count();
-
-        if($checkOwnership === 0){
-            throw new NotFoundHttpException('Resource not found', null, 404);
-        }
-
-        return Subscription::find($sub_id);
+        $clientSub = $this->appService->clientSubscriptionData($id, $sub_id);
+        return new JsonResponse($clientSub, 200);
     }
 
     /**
@@ -78,15 +80,13 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $sub_id
+     * @param int $id
+     * @param int $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientSubscribes($id, $sub_id)
+    public function clientSubscribes(int $id, int $sub_id)
     {
-        $client = Client::findOrFail($id);
-        $sub = Subscription::findOrFail($sub_id);
-        $client->subscriptions()->attach($sub->id);
+        $this->appService->clientSubscribes($id, $sub_id);
         return new JsonResponse('', 204);
     }
 
@@ -103,15 +103,13 @@ class ClientSubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $sub_id
+     * @param int $id
+     * @param int $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientUnsubscribes($id, $sub_id)
+    public function clientUnsubscribes(int $id, int $sub_id)
     {
-        $client = Client::findOrFail($id);
-        $sub = Subscription::findOrFail($sub_id);
-        $client->subscriptions()->detach($sub->id);
+        $this->appService->clientUnsubscribes($id, $sub_id);
         return new JsonResponse('', 204);
     }
 }

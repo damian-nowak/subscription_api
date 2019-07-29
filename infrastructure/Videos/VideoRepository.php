@@ -19,19 +19,19 @@ class VideoRepository implements RepositoryInterface
         return $this->video::all();
     }
 
-    public function find($id)
+    public function find(int $id)
     {
         return $this->video::findOrFail($id);
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         return $this->video::create([
             'title' => $data['title']
         ]);
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         $vidToUpdate = $this->video::findOrFail($id);
 
@@ -42,7 +42,7 @@ class VideoRepository implements RepositoryInterface
         return $vidToUpdate;
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $clientToDelete = $this->video::findOrFail($id);
         return $clientToDelete->delete();

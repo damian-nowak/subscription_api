@@ -18,22 +18,22 @@ class AbstractDomainService implements DomainServiceInterface
         return $this->repository->findAll();
     }
 
-    public function find($id)
+    public function find(int $id)
     {
         return $this->repository->find($id);
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         return $this->repository->create($data);
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
         return $this->repository->update($id, $data);
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         return $this->repository->delete($id);
     }

@@ -3,10 +3,9 @@
 namespace App\Clients\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Infrastructure\Clients\Client;
-use Infrastructure\Videos\Video;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Clients\Services\ClientApplicationService;
+
 
 /**
  * @apiDefine ResourceNotFoundError
@@ -15,6 +14,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ClientVideoController extends Controller
 {
+    public $appService;
+
+    public function __construct(ClientApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /clients/:id/videos Display client's videos.
      * @apiParam {Number} id Client unique ID
@@ -27,13 +33,13 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function listClientVideos($id)
     {
-        $client = Client::findOrFail($id);
-        return new JsonResponse($client->allVideos(), 200);
+        $clientVideos = $this->appService->listClientVideos($id);
+        return new JsonResponse($clientVideos, 200);
     }
 
     /**
@@ -49,21 +55,14 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $vid_id
+     * @param int $id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function clientVideoData($id, $vid_id)
     {
-        $client = Client::findOrFail($id);
-        $ownedVideos = $client->allVideos();
-        $checkOwnership = $ownedVideos->where('id', $vid_id)->count();
-
-        if($checkOwnership === 0){
-            throw new NotFoundHttpException('Resource not found', null, 404);
-        }
-
-        return Video::find($vid_id);
+        $clientVideo = $this->appService->clientVideoData($id, $vid_id);
+        return new JsonResponse($clientVideo, 200);
     }
 
     /**
@@ -79,15 +78,13 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $vid_id
+     * @param int $id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function clientAddsVideo($id, $vid_id)
     {
-        $client = Client::findOrFail($id);
-        $vid = Video::findOrFail($vid_id);
-        $client->videos()->attach($vid->id);
+        $this->appService->clientAddsVideo($id, $vid_id);
         return new JsonResponse('', 204);
     }
 
@@ -104,15 +101,13 @@ class ClientVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
-     * @param  $vid_id
+     * @param int $id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function removeClientVideo($id, $vid_id)
     {
-        $client = Client::findOrFail($id);
-        $vid = Video::findOrFail($vid_id);
-        $client->videos()->detach($vid->id);
+        $this->appService->removeClientVideo($id, $vid_id);
         return new JsonResponse('', 204);
     }
 }

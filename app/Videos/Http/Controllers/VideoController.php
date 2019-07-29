@@ -76,7 +76,7 @@ class VideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $vid_id
+     * @param int $vid_id
      * @return \Illuminate\Http\Response
      */
     public function showVideoData($vid_id)
@@ -100,7 +100,7 @@ class VideoController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  VideoUpdateRequest  $request
-     * @param  $vid_id
+     * @param int $vid_id
      * @return \Illuminate\Http\Response
      */
     public function updateVideoData(VideoUpdateRequest $request, $vid_id)
@@ -121,7 +121,7 @@ class VideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $vid_id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function removeVideo($vid_id)

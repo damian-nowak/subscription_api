@@ -76,7 +76,7 @@ class SubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $sub_id
+     * @param int $sub_id
      * @return \Illuminate\Http\Response
      */
     public function showSubscriptionData($sub_id)
@@ -100,7 +100,7 @@ class SubscriptionController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  SubscriptionUpdateRequest  $request
-     * @param  $sub_id
+     * @param int $sub_id
      * @return \Illuminate\Http\Response
      */
     public function updateSubscriptionData(SubscriptionUpdateRequest $request, $sub_id)
@@ -121,7 +121,7 @@ class SubscriptionController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $sub_id
+     * @param int $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function removeSubscription($sub_id)

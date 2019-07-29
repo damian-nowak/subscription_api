@@ -77,10 +77,10 @@ class ClientController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function showClientData($id)
+    public function showClientData(int $id)
     {
         return $this->appService->find($id);
     }
@@ -102,10 +102,10 @@ class ClientController extends Controller
      * @apiUse InvalidDataError
      *
      * @param  ClientUpdateRequest  $request
-     * @param  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function updateClientData(ClientUpdateRequest $request, $id)
+    public function updateClientData(ClientUpdateRequest $request, int $id)
     {
         $data = $request->only(['email', 'name']);
         return $this->appService->update($id, $data);
@@ -123,10 +123,10 @@ class ClientController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function removeClient($id)
+    public function removeClient(int $id)
     {
         $this->appService->delete($id);
         return new JsonResponse('', 204);

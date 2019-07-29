@@ -56,7 +56,6 @@ class Client extends Model
 
         $flat = $subbedVids->flatten();
         $vids = $this->videos;
-        $unique = $vids->concat($flat)->unique('id');
 
         return $vids->concat($flat)->unique('id');
     }

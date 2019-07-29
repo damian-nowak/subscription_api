@@ -3,9 +3,8 @@
 namespace App\Subscriptions\Http\Controllers;
 
 use App\Core\Http\Controllers\Controller;
-use Infrastructure\Subscriptions\Subscription;
 use Illuminate\Http\JsonResponse;
-use Infrastructure\Videos\Video;
+use App\Subscriptions\Services\SubscriptionApplicationService;
 
 /**
  * @apiDefine ResourceNotFoundError
@@ -14,6 +13,13 @@ use Infrastructure\Videos\Video;
  */
 class SubscriptionVideoController extends Controller
 {
+    public $appService;
+
+    public function __construct(SubscriptionApplicationService $appService)
+    {
+        $this->appService = $appService;
+    }
+
     /**
      * @api {get} /subs/:id/videos Display videos connected with subscription.
      * @apiParam {Number} id Subscription unique ID
@@ -26,13 +32,13 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $sub_id
+     * @param int $sub_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function listSubscriptionVideos($sub_id)
     {
-        $sub = Subscription::findOrFail($sub_id);
-        return new JsonResponse($sub->videos()->get(), 200);
+        $subWithVideos = $this->appService->getSubscriptionVideos($sub_id);
+        return new JsonResponse($subWithVideos, 200);
     }
 
     /**
@@ -48,15 +54,13 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $sub_id
-     * @param  $vid_id
+     * @param int $sub_id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function addVideoToSubscription($sub_id, $vid_id)
     {
-        $sub = Subscription::findOrFail($sub_id);
-        $vid = Video::findOrFail($vid_id);
-        $sub->videos()->attach($vid->id);
+        $this->appService->addVideoToSubscription($vid_id, $sub_id);
         return new JsonResponse('', 204);
     }
 
@@ -73,15 +77,13 @@ class SubscriptionVideoController extends Controller
      *
      * @apiUse ResourceNotFoundError
      *
-     * @param  $sub_id
-     * @param  $vid_id
+     * @param int $sub_id
+     * @param int $vid_id
      * @return \Illuminate\Http\JsonResponse
      */
     public function removeVideoFromSubscription($sub_id, $vid_id)
     {
-        $sub = Subscription::findOrFail($sub_id);
-        $vid = Video::findOrFail($vid_id);
-        $sub->videos()->detach($vid->id);
+        $this->appService->removeVideoFromSubscription($vid_id, $sub_id);
         return new JsonResponse('', 204);
     }
 }
